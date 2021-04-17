@@ -20,11 +20,11 @@ appveyor = { repository = "saschagrunert/indextree", branch = "master", service 
 default = ["std"]
 deser = [ "serde" ]
 par_iter = ["rayon"]
-std = []
+std = ["serde/std"]
 
 [dependencies]
 rayon = { version = "1.4.0", optional = true }
-serde = { version = "1.0.115", features = ["derive"], optional = true }
+serde = { version = "1.0.115", default-features = false, features = ["derive","alloc"], optional = true }
 
 [[example]]
 name = "parallel_iteration"
