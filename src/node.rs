@@ -11,29 +11,43 @@ use std::fmt;
 
 use crate::{id::NodeStamp, NodeId};
 
+use minicbor::{Encode,Decode};
+use nanoserde::ToJSON;
+use nanoserde::{SerJson,SerJsonState};
+
 #[derive(PartialEq, Eq, Clone, Debug)]
+#[derive(Encode,Decode)]
 #[cfg_attr(feature = "deser", derive(Deserialize, Serialize))]
+
 pub(crate) enum NodeData<T> {
     /// The actual data store
-    Data(T),
+    #[n(0)] Data(#[n(0)] T),
     /// The next free node position.
-    NextFree(Option<usize>),
+    #[n(1)] NextFree(#[n(0)] Option<usize>),
+}
+
+impl<T> SerJson for NodeData<T> {
+    fn ser_json(&self, d: usize, s: &mut SerJsonState) {
+        //TO FIX
+    }
 }
 
 #[derive(PartialEq, Eq, Clone, Debug)]
+#[derive(Encode,Decode)]
+#[derive(ToJSON)]
 #[cfg_attr(feature = "deser", derive(Deserialize, Serialize))]
 /// A node within a particular `Arena`.
 pub struct Node<T> {
     // Keep these private (with read-only accessors) so that we can keep them
     // consistent. E.g. the parent of a node’s child is that node.
-    pub(crate) parent: Option<NodeId>,
-    pub(crate) previous_sibling: Option<NodeId>,
-    pub(crate) next_sibling: Option<NodeId>,
-    pub(crate) first_child: Option<NodeId>,
-    pub(crate) last_child: Option<NodeId>,
-    pub(crate) stamp: NodeStamp,
+    #[n(0)] pub(crate) parent: Option<NodeId>,
+    #[n(1)] pub(crate) previous_sibling: Option<NodeId>,
+    #[n(2)] pub(crate) next_sibling: Option<NodeId>,
+    #[n(3)] pub(crate) first_child: Option<NodeId>,
+    #[n(4)] pub(crate) last_child: Option<NodeId>,
+    #[n(5)] pub(crate) stamp: NodeStamp,
     /// The actual data which will be stored within the tree.
-    pub(crate) data: NodeData<T>,
+    #[n(6)] pub(crate) data: NodeData<T>,
 }
 
 impl<T> Node<T> {

@@ -23,15 +23,20 @@ use std::{
 
 use crate::{node::NodeData, Node, NodeId};
 
+use minicbor::{Encode,Decode};
+use nanoserde::ToJSON;
+
 #[derive(PartialEq, Eq, Clone, Debug)]
+#[derive(Encode,Decode)]
 #[cfg_attr(feature = "deser", derive(Deserialize, Serialize))]
+#[derive(ToJSON)]
 /// An `Arena` structure containing certain [`Node`]s.
 ///
 /// [`Node`]: struct.Node.html
 pub struct Arena<T> {
-    nodes: Vec<Node<T>>,
-    first_free_slot: Option<usize>,
-    last_free_slot: Option<usize>,
+    #[n(0)] nodes: Vec<Node<T>>,
+    #[n(1)] first_free_slot: Option<usize>,
+    #[n(2)] last_free_slot: Option<usize>,
 }
 
 impl<T> Arena<T> {

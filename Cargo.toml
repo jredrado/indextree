@@ -17,7 +17,7 @@ travis-ci = { repository = "saschagrunert/indextree", branch = "master" }
 appveyor = { repository = "saschagrunert/indextree", branch = "master", service = "github" }
 
 [features]
-default = ["std"]
+default = []
 deser = [ "serde" ]
 par_iter = ["rayon"]
 std = ["serde/std"]
@@ -25,6 +25,11 @@ std = ["serde/std"]
 [dependencies]
 rayon = { version = "1.4.0", optional = true }
 serde = { version = "1.0.115", default-features = false, features = ["derive","alloc"], optional = true }
+
+#authcomp = { path = "../urschain/src/authcomp", version= "0.1.0"}
+minicbor = {git='https://github.com/jredrado/minicbor.git', branch="master", version="0.11.1", default-features = false, features = ["alloc","derive"]}
+#nanoserde = {version="0.1.29", path="../nanoserde"}
+nanoserde = {version="0.1.29", git="https://github.com/jredrado/nanoserde.git",branch="master"}
 
 [[example]]
 name = "parallel_iteration"

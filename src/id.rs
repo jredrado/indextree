@@ -15,7 +15,11 @@ use crate::{
     Traverse,
 };
 
+use minicbor::{Encode,Decode};
+use nanoserde::ToJSON;
+
 #[derive(PartialEq, Eq, PartialOrd, Ord, Copy, Clone, Debug, Hash)]
+#[derive(Encode,Decode)]
 #[cfg_attr(feature = "deser", derive(Deserialize, Serialize))]
 /// A node identifier within a particular [`Arena`].
 ///
@@ -23,40 +27,45 @@ use crate::{
 ///
 /// [`Arena`]: struct.Arena.html
 /// [`Node`]: struct.Node.html
+#[derive(ToJSON)]
 pub struct NodeId {
     /// One-based index.
-    index1: NonZeroUsize,
-    stamp: NodeStamp,
+    #[n(0)] index1: NonZeroUsize,
+    #[n(1)] stamp: NodeStamp,
 }
 
 /// A stamp for node reuse, use to detect if the node of a `NodeId` point to
 /// is still the same node.
 #[derive(PartialEq, Eq, PartialOrd, Ord, Copy, Clone, Debug, Hash, Default)]
+#[derive(Encode,Decode)]
+#[derive(ToJSON)]
 #[cfg_attr(feature = "deser", derive(Deserialize, Serialize))]
-pub(crate) struct NodeStamp(i16);
+pub(crate) struct NodeStamp {
+    #[n(0)] data: i16
+}
 
 impl NodeStamp {
     pub fn is_removed(self) -> bool {
-        self.0.is_negative()
+        self.data.is_negative()
     }
 
     pub fn as_removed(&mut self) {
         debug_assert!(!self.is_removed());
-        self.0 = if self.0 < i16::MAX {
-            -self.0 - 1
+        self.data = if self.data < i16::MAX {
+            -self.data - 1
         } else {
-            -self.0
+            -self.data
         };
     }
 
     pub fn reuseable(self) -> bool {
         debug_assert!(self.is_removed());
-        self.0 > i16::MIN
+        self.data > i16::MIN
     }
 
     pub fn reuse(&mut self) -> Self {
         debug_assert!(self.reuseable());
-        self.0 = -self.0;
+        self.data = -self.data;
         *self
     }
 }
