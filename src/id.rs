@@ -16,7 +16,7 @@ use crate::{
 };
 
 use minicbor::{Encode,Decode};
-use nanoserde::ToJSON;
+use nanoserde::SerJson;
 
 #[derive(PartialEq, Eq, PartialOrd, Ord, Copy, Clone, Debug, Hash)]
 #[derive(Encode,Decode)]
@@ -27,7 +27,7 @@ use nanoserde::ToJSON;
 ///
 /// [`Arena`]: struct.Arena.html
 /// [`Node`]: struct.Node.html
-#[derive(ToJSON)]
+#[derive(SerJson)]
 pub struct NodeId {
     /// One-based index.
     #[n(0)] index1: NonZeroUsize,
@@ -38,7 +38,7 @@ pub struct NodeId {
 /// is still the same node.
 #[derive(PartialEq, Eq, PartialOrd, Ord, Copy, Clone, Debug, Hash, Default)]
 #[derive(Encode,Decode)]
-#[derive(ToJSON)]
+#[derive(SerJson)]
 #[cfg_attr(feature = "deser", derive(Deserialize, Serialize))]
 pub(crate) struct NodeStamp {
     #[n(0)] data: i16
