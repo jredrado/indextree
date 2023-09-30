@@ -12,7 +12,6 @@ use std::fmt;
 use crate::{id::NodeStamp, NodeId};
 
 use minicbor::{Encode,Decode};
-use nanoserde::ToJSON;
 use nanoserde::{SerJson,SerJsonState};
 
 #[derive(PartialEq, Eq, Clone, Debug)]
@@ -34,7 +33,7 @@ impl<T> SerJson for NodeData<T> {
 
 #[derive(PartialEq, Eq, Clone, Debug)]
 #[derive(Encode,Decode)]
-#[derive(ToJSON)]
+#[derive(SerJson)]
 #[cfg_attr(feature = "deser", derive(Deserialize, Serialize))]
 /// A node within a particular `Arena`.
 pub struct Node<T> {
