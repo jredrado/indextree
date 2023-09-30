@@ -24,11 +24,10 @@ std = ["serde/std"]
 
 [dependencies]
 rayon = { version = "1.4.0", optional = true }
-serde = { version = "1.0.115", default-features = false, features = ["derive","alloc"], optional = true }
+serde = { version = "1.0.115", default-features = false, features = ["derive","std"], optional = true }
 
-#authcomp = { path = "../urschain/src/authcomp", version= "0.1.0"}
-minicbor = {git='https://github.com/jredrado/minicbor.git', branch="master", version="0.11.1", default-features = false, features = ["alloc","derive"]}
-#nanoserde = {version="0.1.29", path="../nanoserde"}
+minicbor =  { version = "0.15.0", features = ["std","derive"] }
+
 nanoserde = {version="0.1.29", git="https://github.com/jredrado/nanoserde.git",branch="master"}
 
 [[example]]
