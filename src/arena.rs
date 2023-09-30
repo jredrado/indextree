@@ -24,12 +24,12 @@ use std::{
 use crate::{node::NodeData, Node, NodeId};
 
 use minicbor::{Encode,Decode};
-use nanoserde::ToJSON;
+use nanoserde::SerJson;
 
 #[derive(PartialEq, Eq, Clone, Debug)]
 #[derive(Encode,Decode)]
 #[cfg_attr(feature = "deser", derive(Deserialize, Serialize))]
-#[derive(ToJSON)]
+#[derive(SerJson)]
 /// An `Arena` structure containing certain [`Node`]s.
 ///
 /// [`Node`]: struct.Node.html
