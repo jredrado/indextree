@@ -10,7 +10,7 @@ homepage = "https://github.com/saschagrunert/indextree"
 documentation = "https://docs.rs/indextree"
 description = "Arena based tree structure by using indices instead of reference counted pointers"
 categories = ["data-structures"]
-edition = "2018"
+edition = "2021"
 
 [badges]
 travis-ci = { repository = "saschagrunert/indextree", branch = "master" }
@@ -24,12 +24,10 @@ std = ["serde/std"]
 
 [dependencies]
 rayon = { version = "1.4.0", optional = true }
-serde = { version = "1.0.115", default-features = false, features = ["derive","alloc"], optional = true }
+serde = { version = "1.0.115", default-features = false, features = ["derive"], optional = true }
 
-#authcomp = { path = "../urschain/src/authcomp", version= "0.1.0"}
-minicbor = {git='https://github.com/jredrado/minicbor.git', branch="master", version="0.11.1", default-features = false, features = ["alloc","derive"]}
-#nanoserde = {version="0.1.29", path="../nanoserde"}
-nanoserde = {version="0.1.29", git="https://github.com/jredrado/nanoserde.git",branch="master"}
+minicbor =  { version = "0.15.0", features = ["std","derive"] }
+nanoserde = "0.1.35"
 
 [[example]]
 name = "parallel_iteration"
