@@ -26,9 +26,10 @@ std = ["serde/std"]
 rayon = { version = "1.4.0", optional = true }
 serde = { version = "1.0.115", default-features = false, features = ["derive","std"], optional = true }
 
-minicbor =  { version = "0.15.0", features = ["std","derive"] }
+minicbor = {git='https://github.com/jredrado/minicbor.git', branch="master", version="0.11.1", default-features = false, features = ["std","derive"]}
 
-nanoserde = {version="0.1.29", git="https://github.com/jredrado/nanoserde.git",branch="master", features=["std"]}
+nanoserde = {version="0.1.29", git="https://github.com/jredrado/nanoserde.git",branch="master",features = ["std"]}
+
 
 [[example]]
 name = "parallel_iteration"
