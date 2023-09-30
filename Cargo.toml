@@ -28,7 +28,7 @@ serde = { version = "1.0.115", default-features = false, features = ["derive","s
 
 minicbor =  { version = "0.15.0", features = ["std","derive"] }
 
-nanoserde = {version="0.1.29", git="https://github.com/jredrado/nanoserde.git",branch="master"}
+nanoserde = {version="0.1.29", git="https://github.com/jredrado/nanoserde.git",branch="master", features=["std"]}
 
 [[example]]
 name = "parallel_iteration"
